@@ -19,15 +19,15 @@
     "edit",
     "webpack"
   ],
-  "author": "Joshua Rose <josh@upros3.com>",
+  "author": "Noah-Jerome Lotzer <n.lotzer@neusta.de>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/upRos3/react-boilerplate/issues"
+    "url": "https://github.com/noahlotzer/react-simple-boilerplate/issues"
   },
-  "homepage": "https://github.com/upRos3/react-boilerplate",
+  "homepage": "https://github.com/noahlotzer/react-simple-boilerplate",
   "engines": {
     "node": ">=6.0.0"
-  },
+},
   "devDependencies": {
     "babel-core": "6.23.1",
     "babel-loader": "6.3.1",
