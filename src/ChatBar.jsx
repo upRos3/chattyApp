@@ -1,8 +1,17 @@
 import React, { Component } from "react";
 
 class ChatBar extends Component {
+  // const {currentUser} = this.props;
+  onKeyPress = e => {
+    console.log(this.props);
+    if (e.key === "Enter") {
+      this.props.bringMessage(e.target.value, this.props.currentUser);
+      e.target.value = "";
+    }
+  };
+
   render() {
-    const {currentUser} = this.props;
+    const { currentUser } = this.props;
     return (
       <footer className="chatbar">
         <input
@@ -13,6 +22,7 @@ class ChatBar extends Component {
         <input
           className="chatbar-message"
           placeholder="Type a message and hit ENTER"
+          onKeyPress={this.onKeyPress}
         />
       </footer>
     );
