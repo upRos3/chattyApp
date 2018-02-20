@@ -10,11 +10,11 @@ class App extends Component {
       currentUser: { name: "Bob" }, // optional. if currentUser is not defined, it means the user is Anonymous
 
       messages: [
-        {
+        { key: 0,
           username: "Bob",
           content: "Has anyone seen my marbles?"
         },
-        {
+        { key: 1,
           username: "Anonymous",
           content: "No, I think you lost them. You lost your marbles Bob. You lost them for good."
         }
