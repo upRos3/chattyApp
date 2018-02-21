@@ -6,7 +6,8 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    // this.socket = null;
+    this.websocket = new WebSocket("ws://localhost:3001");
+
     this.state = {
       currentUser: "Someone",
       messages: []
@@ -14,27 +15,36 @@ class App extends Component {
   }
 
   componentWillMount() {
-    this.setState({
-      messages: [
-        {
-          key: 0,
-          username: "Bob",
-          content: "Has anyone seen my marbles?"
-        },
-        {
-          key: 1,
-          username: "Anonymous",
-          content:
-            "No, I think you lost them. You lost your marbles Bob. You lost them for good."
-        }
-      ]
-    });
+    console.log("Messages will be mounted");
+    // this.setState({
+    //   messages: [
+    //     {
+    //       key: 0,
+    //       username: "Bob",
+    //       content: "Has anyone seen my marbles?"
+    //     },
+    //     {
+    //       key: 1,
+    //       username: "Anonymous",
+    //       content:
+    //         "No, I think you lost them. You lost your marbles Bob. You lost them for good."
+    //     }
+    //   ]
+    // });
   }
 
   componentDidMount() {
     console.log("componentDidMount <App />");
-    this.socket = new WebSocket("ws://localhost:3001");
-    console.log("Websocket Connected!");
+    this.websocket.onopen = event => {
+      console.log("WebSocket connected!");
+      //   let msg = {
+      //     type: "message",
+      //     currentUser: this.state.currentUser,
+      //     text: "testing",
+      //     key: this.state.messages[0].content
+      //   };
+      //   this.websocket.send(JSON.stringify(msg));
+    };
   }
 
   bringMessage = (content, username) => {
@@ -46,6 +56,7 @@ class App extends Component {
     let messages = this.state.messages;
     messages.push(newMessage);
     this.setState({ messages: messages });
+    this.websocket.send(JSON.stringify(newMessage));
   };
 
   render() {

@@ -1,18 +1,16 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
 
 class MessageList extends Component {
-  console.log("Rendering <MessageList/>");
   render() {
-    const messages = this.props.messages.map((message) => {
+    console.log("Rendering <MessageList/>");
+    const messages = this.props.messages.map(message => {
       return (
         <div key={message.key}>
           <span className="message-username">{message.username}</span>
           <span className="message-content">{message.content}</span>
         </div>
-            )
-      });
-
-
+      );
+    });
 
     return (
       <div>
@@ -21,7 +19,6 @@ class MessageList extends Component {
           Anonymous1 changed their name to nomnom.
         </div>
       </div>
-
     );
   }
 }
