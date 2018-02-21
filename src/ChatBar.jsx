@@ -10,6 +10,7 @@ class ChatBar extends Component {
   };
 
   render() {
+    console.log("Rendering <ChatBar/>");
     const { currentUser } = this.props;
     return (
       <footer className="chatbar">
