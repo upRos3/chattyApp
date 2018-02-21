@@ -3,7 +3,6 @@ import React, { Component } from "react";
 class ChatBar extends Component {
   // const {currentUser} = this.props;
   onKeyPress = e => {
-    console.log(this.props);
     if (e.key === "Enter") {
       this.props.bringMessage(e.target.value, this.props.currentUser);
       e.target.value = "";
