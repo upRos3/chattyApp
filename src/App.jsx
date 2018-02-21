@@ -47,7 +47,7 @@ class App extends Component {
     };
   }
 
-  bringMessage = (content, username) => {
+  handleMessage = (content, username) => {
     const newMessage = {
       type: "message",
       username: username,
@@ -55,16 +55,14 @@ class App extends Component {
     };
 
     //Send to server
+    console.log(newMessage);
     this.websocket.send(JSON.stringify(newMessage));
 
     //Received from server
     this.websocket.onmessage = event => {
-      JSON.parse(event.data);
-    };
-
-    this.websocket.onmessage = event => {
       let returnedMessage = {};
       returnedMessage = JSON.parse(event.data);
+      console.log(returnedMessage);
       let messages = this.state.messages;
       messages.push(returnedMessage);
       this.setState({ messages: messages });
@@ -78,7 +76,7 @@ class App extends Component {
     return (
       <div>
         <Message messages={messages} />
-        <ChatBar bringMessage={this.bringMessage} currentUser={currentUser} />
+        <ChatBar handleMessage={this.handleMessage} currentUser={currentUser} />
       </div>
     );
   }

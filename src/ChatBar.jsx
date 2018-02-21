@@ -4,7 +4,7 @@ class ChatBar extends Component {
   // const {currentUser} = this.props;
   onKeyPress = e => {
     if (e.key === "Enter") {
-      this.props.bringMessage(e.target.value, this.props.currentUser);
+      this.props.handleMessage(e.target.value, this.props.currentUser);
       e.target.value = "";
     }
   };
