@@ -53,15 +53,25 @@ class App extends Component {
       username: username,
       content: content
     };
-    let messages = this.state.messages;
-    messages.push(newMessage);
-    this.setState({ messages: messages });
+
+    //Send to server
     this.websocket.send(JSON.stringify(newMessage));
+
+    //Received from server
+    this.websocket.onmessage = event => {
+      JSON.parse(event.data);
+    };
+
+    this.websocket.onmessage = event => {
+      let returnedMessage = {};
+      returnedMessage = JSON.parse(event.data);
+      let messages = this.state.messages;
+      messages.push(returnedMessage);
+      this.setState({ messages: messages });
+    };
   };
 
   render() {
-    console.log("Rendering <App/>");
-
     const currentUser = this.state.currentUser;
     const messages = this.state.messages;
 

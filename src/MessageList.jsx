@@ -2,7 +2,6 @@ import React, { Component } from "react";
 
 class MessageList extends Component {
   render() {
-    console.log("Rendering <MessageList/>");
     const messages = this.props.messages.map(message => {
       return (
         <div key={message.key}>
