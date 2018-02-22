@@ -16,21 +16,6 @@ class App extends Component {
 
   componentWillMount() {
     console.log("Messages will be mounted");
-    // this.setState({
-    //   messages: [
-    //     {
-    //       key: 0,
-    //       username: "Bob",
-    //       content: "Has anyone seen my marbles?"
-    //     },
-    //     {
-    //       key: 1,
-    //       username: "Anonymous",
-    //       content:
-    //         "No, I think you lost them. You lost your marbles Bob. You lost them for good."
-    //     }
-    //   ]
-    // });
   }
 
   componentDidMount() {
@@ -73,12 +58,11 @@ class App extends Component {
 
     //Recieved from server:
     this.websocket.onmessage = event => {
-      let returnedMessage = {};
-      returnedMessage = JSON.parse(event.data);
-      console.log(returnedMessage);
-      // let notification = this.state.messages;
-      // messages.push(returnedMessage);
-      // this.setState({ messages: notification });
+      let returnedNotifciation = {};
+      returnedNotifciation = JSON.parse(event.data);
+      let messages = this.state.messages;
+      messages.push(returnedNotifciation);
+      this.setState({ messages: messages });
     };
 
     this.setState({ currentUser: newUsername });
