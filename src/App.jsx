@@ -47,10 +47,10 @@ class App extends Component {
     };
   }
 
-  handleMessage = (content, username) => {
+  handleMessage = content => {
     const newMessage = {
       type: "message",
-      username: username,
+      username: this.state.currentUser,
       content: content
     };
 
@@ -69,6 +69,10 @@ class App extends Component {
     };
   };
 
+  handleName = username => {
+    this.setState({ currentUser: username });
+  };
+
   render() {
     const currentUser = this.state.currentUser;
     const messages = this.state.messages;
@@ -76,7 +80,10 @@ class App extends Component {
     return (
       <div>
         <Message messages={messages} />
-        <ChatBar handleMessage={this.handleMessage} currentUser={currentUser} />
+        <ChatBar
+          handleMessage={this.handleMessage}
+          handleName={this.handleName}
+        />
       </div>
     );
   }
