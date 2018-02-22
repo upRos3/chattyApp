@@ -37,13 +37,6 @@ class App extends Component {
     console.log("componentDidMount <App />");
     this.websocket.onopen = event => {
       console.log("WebSocket connected!");
-      //   let msg = {
-      //     type: "message",
-      //     currentUser: this.state.currentUser,
-      //     text: "testing",
-      //     key: this.state.messages[0].content
-      //   };
-      //   this.websocket.send(JSON.stringify(msg));
     };
   }
 
