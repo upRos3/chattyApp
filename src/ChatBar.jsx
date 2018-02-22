@@ -4,7 +4,7 @@ class ChatBar extends Component {
   // const {currentUser} = this.props;
   messageSubmit = e => {
     if (e.key === "Enter") {
-      this.props.handleMessage(e.target.value, this.props.currentUser);
+      this.props.handleMessage(e.target.value);
       e.target.value = "";
     }
   };
@@ -12,7 +12,6 @@ class ChatBar extends Component {
   nameChange = e => {
     if (e.key === "Enter") {
       this.props.handleName(e.target.value);
-      e.target.value = "";
     }
   };
 

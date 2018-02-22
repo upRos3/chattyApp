@@ -9,7 +9,7 @@ class App extends Component {
     this.websocket = new WebSocket("ws://localhost:3001");
 
     this.state = {
-      currentUser: "Someone",
+      currentUser: "Bob",
       messages: []
     };
   }
