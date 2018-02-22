@@ -23,14 +23,29 @@ wss.on("connection", ws => {
   console.log("Client connected!");
   ws.on("message", data => {
     let incoming = JSON.parse(data);
-    let outgoing = {
-      type: "message",
-      key: uuidv1(),
-      username: incoming.username,
-      content: incoming.content
-    };
+    switch (incoming.type) {
+      case "message":
+        let outgoingMessage = {
+          type: "message",
+          key: uuidv1(),
+          username: incoming.username,
+          content: incoming.content
+        };
+        ws.send(JSON.stringify(outgoingMessage));
+        break;
 
-    ws.send(JSON.stringify(outgoing));
+      case "notification":
+        let outgoingNotification = {
+          type: "notification",
+          key: uuidv1(),
+          content: incoming.content
+        };
+        ws.send(JSON.stringify(outgoingNotification));
+        break;
+
+      default:
+        throw new Error("Unknown event type: " + data.type);
+    }
   });
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
   ws.on("close", () => console.log("Client disconnected :("));

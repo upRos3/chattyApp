@@ -60,8 +60,28 @@ class App extends Component {
     };
   };
 
-  handleName = username => {
-    this.setState({ currentUser: username });
+  handleName = newUsername => {
+    const newNotification = {
+      type: "notification",
+      content: `${
+        this.state.currentUser
+      } has changed their name to ${newUsername}`
+    };
+
+    //Send to Server
+    this.websocket.send(JSON.stringify(newNotification));
+
+    //Recieved from server:
+    this.websocket.onmessage = event => {
+      let returnedMessage = {};
+      returnedMessage = JSON.parse(event.data);
+      console.log(returnedMessage);
+      // let notification = this.state.messages;
+      // messages.push(returnedMessage);
+      // this.setState({ messages: notification });
+    };
+
+    this.setState({ currentUser: newUsername });
   };
 
   render() {
