@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Message from "./Message.jsx";
 import ChatBar from "./ChatBar.jsx";
+import NavBar from "./NavBar.jsx";
 
 class App extends Component {
   constructor(props) {
@@ -85,9 +86,11 @@ class App extends Component {
   render() {
     const currentUser = this.state.currentUser;
     const messages = this.state.messages;
+    const loggedInUsers = this.state.loggedInUsers;
 
     return (
       <div>
+        <NavBar loggedInUsers={loggedInUsers} />
         <Message messages={messages} />
         <ChatBar
           handleMessage={this.handleMessage}
