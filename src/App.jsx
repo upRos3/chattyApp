@@ -59,25 +59,31 @@ class App extends Component {
   };
 
   handleName = nameChange => {
+    //Send to server
+    const sendData = data => {
+      return this.websocket.send(JSON.stringify(data));
+    };
+
     let messages = this.state.messages;
+
     if (this.state.currentUser === nameChange) {
       const sameName = {
         type: "alert",
         username: this.state.currentUser,
         content: `${this.state.currentUser} is already your name!`
       };
-      //Send to server
-      this.websocket.send(JSON.stringify(sameName));
+
+      sendData(sameName);
     } else {
-      let newName = {
+      const newName = {
         type: "notification",
         newUsername: nameChange,
         content: `${
           this.state.currentUser
         } has changed their name to ${nameChange}`
       };
-      //Send to Server
-      this.websocket.send(JSON.stringify(newName));
+
+      sendData(newName);
     }
   };
 
