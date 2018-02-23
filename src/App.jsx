@@ -17,41 +17,33 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.websocket.onopen = event => {
-      //Received from websocket server
-      this.websocket.onmessage = event => {
-        let returnedMessage = JSON.parse(event.data);
-        let messages = this.state.messages;
+    //Received from websocket server
+    this.websocket.onmessage = event => {
+      let returnedMessage = JSON.parse(event.data);
+      let messages = this.state.messages;
 
-        switch (returnedMessage.type) {
-          case "sumOfUsers":
-            this.setState({ loggedInUsers: returnedMessage.content });
-            break;
+      switch (returnedMessage.type) {
+        case "sumOfUsers":
+          this.setState({ loggedInUsers: returnedMessage.content });
+          break;
 
-          case "login":
-            console.log(returnedMessage);
-            messages.push(returnedMessage);
-            this.setState({ messages: messages });
-            break;
+        case "message":
+          messages.push(returnedMessage);
+          this.setState({ messages: messages });
+          break;
 
-          case "message":
-            messages.push(returnedMessage);
-            this.setState({ messages: messages });
-            break;
+        case "nameChange":
+          this.setState({ currentUser: returnedMessage.newUsername });
+          break;
 
-          case "nameChange":
-            this.setState({ currentUser: returnedMessage.newUsername });
-            break;
+        case "notification":
+          messages.push(returnedMessage);
+          this.setState({ messages: messages });
+          break;
 
-          case "notification":
-            messages.push(returnedMessage);
-            this.setState({ messages: messages });
-            break;
-
-          default:
-            throw new Error("Unknown event type: " + data.type);
-        }
-      };
+        default:
+          throw new Error("Unknown event type: " + data.type);
+      }
     };
   }
 
@@ -90,7 +82,6 @@ class App extends Component {
   };
 
   render() {
-    const currentUser = this.state.currentUser;
     const messages = this.state.messages;
     const loggedInUsers = this.state.loggedInUsers;
 
