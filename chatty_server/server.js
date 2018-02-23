@@ -15,6 +15,14 @@ const server = express()
 // Create the WebSockets server
 const wss = new SocketServer({ server });
 
+wss.broadcast = function broadcast(data) {
+  wss.clients.forEach(function each(client) {
+    if (client.readyState === 1) {
+      client.send(data);
+    }
+  });
+};
+
 const trackLogins = () => {
   let numLoggedIn = {
     type: "sumOfUsers",
@@ -30,7 +38,7 @@ const trackLogins = () => {
 wss.on("connection", ws => {
   console.log("Client connected!");
 
-  ws.send(trackLogins());
+  wss.broadcast(trackLogins());
 
   let connectionMessage = {
     type: "login",
@@ -38,7 +46,7 @@ wss.on("connection", ws => {
     content: "Someone has connected"
   };
 
-  ws.send(JSON.stringify(connectionMessage));
+  wss.broadcast(JSON.stringify(connectionMessage));
 
   ws.on("message", data => {
     let incoming = JSON.parse(data);
@@ -50,7 +58,7 @@ wss.on("connection", ws => {
           username: incoming.username,
           content: incoming.content
         };
-        ws.send(JSON.stringify(outgoingMessage));
+        wss.broadcast(JSON.stringify(outgoingMessage));
         break;
 
       case "notification":
