@@ -9,6 +9,7 @@ class App extends Component {
     this.websocket = new WebSocket("ws://localhost:3001");
 
     this.state = {
+      loggedInUsers: "",
       currentUser: "Bob",
       messages: []
     };
@@ -26,10 +27,14 @@ class App extends Component {
       //Received from server
       this.websocket.onmessage = event => {
         let returnedMessage = JSON.parse(event.data);
-        console.log(returnedMessage);
         let messages = this.state.messages;
 
         switch (returnedMessage.type) {
+          case "sumOfUsers":
+            this.setState({ loggedInUsers: returnedMessage.content });
+            console.log(this.state.loggedInUsers);
+            break;
+
           case "login":
             messages.push(returnedMessage);
             this.setState({ messages: messages });
@@ -59,6 +64,7 @@ class App extends Component {
       username: this.state.currentUser,
       content: content
     };
+
     //Send to server
     this.websocket.send(JSON.stringify(newMessage));
   };
