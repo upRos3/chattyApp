@@ -75,6 +75,12 @@ body {
   position: fixed;
   right: 0;
   top: 0;
+
+  .logged-in-users {
+    float: right;
+    font-size: 20px;
+    padding-top: 19px;
+  }
 }
 
 .navbar-brand {
