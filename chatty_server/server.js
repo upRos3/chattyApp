@@ -21,6 +21,15 @@ const wss = new SocketServer({ server });
 // the ws parameter in the callback.
 wss.on("connection", ws => {
   console.log("Client connected!");
+
+  let connectionMessage = {
+    type: "login",
+    key: uuidv1(),
+    content: "Someone has connected"
+  };
+
+  ws.send(JSON.stringify(connectionMessage));
+
   ws.on("message", data => {
     let incoming = JSON.parse(data);
     switch (incoming.type) {
@@ -37,6 +46,7 @@ wss.on("connection", ws => {
       case "notification":
         let outgoingNotification = {
           type: "notification",
+          newUsername: incoming.newUsername,
           key: uuidv1(),
           content: incoming.content
         };
