@@ -36,14 +36,12 @@ const trackLogins = () => {
 // When a client connects they are assigned a socket, represented by
 // the ws parameter in the callback.
 wss.on("connection", ws => {
-  console.log("Client connected!");
-
   wss.broadcast(trackLogins());
 
   let connectionMessage = {
-    type: "login",
+    type: "notification",
     key: uuidv1(),
-    content: "Someone has connected"
+    content: "A new user has connected"
   };
 
   wss.broadcast(JSON.stringify(connectionMessage));
@@ -92,7 +90,13 @@ wss.on("connection", ws => {
   });
   // Set up a callback for when a client closes the socket. This usually means they closed their browser.
   ws.on("close", () => {
+    let connectionMessage = {
+      type: "notification",
+      key: uuidv1(),
+      content: "A user has disconnected"
+    };
+
+    wss.broadcast(JSON.stringify(connectionMessage));
     wss.broadcast(trackLogins());
-    console.log("Client disconnected :(");
   });
 });

@@ -16,16 +16,9 @@ class App extends Component {
     };
   }
 
-  componentWillMount() {
-    console.log("Messages will be mounted");
-  }
-
   componentDidMount() {
-    console.log("componentDidMount <App />");
     this.websocket.onopen = event => {
-      console.log("WebSocket connected!");
-
-      //Received from server
+      //Received from websocket server
       this.websocket.onmessage = event => {
         let returnedMessage = JSON.parse(event.data);
         let messages = this.state.messages;
@@ -36,6 +29,7 @@ class App extends Component {
             break;
 
           case "login":
+            console.log(returnedMessage);
             messages.push(returnedMessage);
             this.setState({ messages: messages });
             break;
