@@ -49,6 +49,9 @@ class App extends Component {
           case "notification":
             messages.push(returnedMessage);
             this.setState({ messages: messages });
+            break;
+
+          case "nameChange":
             this.setState({ currentUser: returnedMessage.newUsername });
             break;
 

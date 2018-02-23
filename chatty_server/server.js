@@ -64,11 +64,17 @@ wss.on("connection", ws => {
       case "notification":
         let outgoingNotification = {
           type: "notification",
-          newUsername: incoming.newUsername,
           key: uuidv1(),
           content: incoming.content
         };
-        ws.send(JSON.stringify(outgoingNotification));
+
+        let nameChange = {
+          type: "nameChange",
+          newUsername: incoming.newUsername
+        };
+
+        wss.broadcast(JSON.stringify(outgoingNotification));
+        ws.send(JSON.stringify(nameChange));
         break;
 
       default:
