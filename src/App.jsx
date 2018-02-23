@@ -11,7 +11,7 @@ class App extends Component {
 
     this.state = {
       loggedInUsers: "",
-      currentUser: "Bob",
+      currentUser: "Anonymous",
       messages: []
     };
   }
@@ -33,7 +33,6 @@ class App extends Component {
         switch (returnedMessage.type) {
           case "sumOfUsers":
             this.setState({ loggedInUsers: returnedMessage.content });
-            console.log(this.state.loggedInUsers);
             break;
 
           case "login":
@@ -46,13 +45,13 @@ class App extends Component {
             this.setState({ messages: messages });
             break;
 
+          case "nameChange":
+            this.setState({ currentUser: returnedMessage.newUsername });
+            break;
+
           case "notification":
             messages.push(returnedMessage);
             this.setState({ messages: messages });
-            break;
-
-          case "nameChange":
-            this.setState({ currentUser: returnedMessage.newUsername });
             break;
 
           default:
@@ -74,16 +73,26 @@ class App extends Component {
   };
 
   handleName = nameChange => {
-    const newNotification = {
-      type: "notification",
-      newUsername: nameChange,
-      content: `${
-        this.state.currentUser
-      } has changed their name to ${nameChange}`
-    };
-
-    //Send to Server
-    this.websocket.send(JSON.stringify(newNotification));
+    let messages = this.state.messages;
+    if (this.state.currentUser === nameChange) {
+      const sameName = {
+        type: "alert",
+        username: this.state.currentUser,
+        content: `${this.state.currentUser} is already your name!`
+      };
+      //Send to server
+      this.websocket.send(JSON.stringify(sameName));
+    } else {
+      let newName = {
+        type: "notification",
+        newUsername: nameChange,
+        content: `${
+          this.state.currentUser
+        } has changed their name to ${nameChange}`
+      };
+      //Send to Server
+      this.websocket.send(JSON.stringify(newName));
+    }
   };
 
   render() {

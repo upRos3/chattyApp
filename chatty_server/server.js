@@ -77,6 +77,15 @@ wss.on("connection", ws => {
         ws.send(JSON.stringify(nameChange));
         break;
 
+      case "alert":
+        let outgoingAlert = {
+          type: "notification",
+          key: uuidv1(),
+          content: incoming.content
+        };
+        ws.send(JSON.stringify(outgoingAlert));
+        break;
+
       default:
         throw new Error("Unknown event type: " + data.type);
     }
