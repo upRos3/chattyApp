@@ -6,7 +6,6 @@ class NavBar extends Component {
     let grammar = "users";
 
     if (this.props.loggedInUsers === 1) {
-      console.log("poop");
       grammar = "user";
     }
 
