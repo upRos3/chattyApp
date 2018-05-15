@@ -19,7 +19,7 @@ npm start
 Then please use the following link to use the application:
 
 ```
-<http://localhost:3000>
+http://localhost:3000
 ```
 
 ### Dependencies
